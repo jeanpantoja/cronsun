@@ -49,9 +49,17 @@ func NewNode(cfg *conf.Conf) (n *Node, err error) {
 		return
 	}
 
-	hostname, err := os.Hostname()
-	if err != nil {
-		hostname = uuid
+	hostname := uuid
+
+	if len(os.Getenv("HOSTNAME")) > 0 {
+		hostname = os.Getenv("HOSTNAME")
+	} else {
+		os_hostname, err := os.Hostname()
+
+		if err == nil {
+			hostname = os_hostname
+		}
+
 		err = nil
 	}
 

@@ -1,0 +1,13 @@
+CRONSUN_ETCD_ENDPOINT=${CRONSUN_ETCD_ENDPOINT:-"http://127.0.0.1:2379"}
+CRONSUN_ETCD_USER_NAME=${CRONSUN_ETCD_USER_NAME:-""}
+CRONSUN_ETCD_PASSWORD=${CRONSUN_ETCD_PASSWORD:-""}
+CRONSUN_ETCD_DIAL_TIMEOUT=${CRONSUN_ETCD_DIAL_TIMEOUT:-"2"}
+
+cronsun:conf:etcd() {
+  echo "{
+    \"Endpoints\": [\"${CRONSUN_ETCD_ENDPOINT}\"],
+    \"Username\": \"${CRONSUN_ETCD_USER_NAME}\",
+    \"Password\": \"${CRONSUN_ETCD_PASSWORD}\",
+    \"DialTimeout\": ${CRONSUN_ETCD_DIAL_TIMEOUT}
+  }" | python -m json.tool;
+}

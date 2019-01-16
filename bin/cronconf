@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+SCRIPT_FILE=$(readlink -f "$0")
+BIN_DIR=$(dirname "$SCRIPT_FILE")
+BASE_DIR=$(dirname "$BIN_DIR")
+
+cronsun:usage() {
+  echo "
+    "tansoo"
+  ";
+}
+
+cronsun:main() {
+  [ -z "$1" ] && {
+    cronsun:usage
+    exit 1
+  }
+
+  local conf_scripts_dir="${BASE_DIR}/share/cronsun/conf"
+  local output_dir="$1"
+
+  mkdir -p "${output_dir}" || (echo "Fail at creat dir: ${output_dir}" && exit 1)
+  echo "Cronsun conf dir[ ${output_dir} ] created"
+
+  source "${conf_scripts_dir}/base.sh"
+  source "${conf_scripts_dir}/db.sh"
+  source "${conf_scripts_dir}/etcd.sh"
+  source "${conf_scripts_dir}/mail.sh"
+  source "${conf_scripts_dir}/security.sh"
+  source "${conf_scripts_dir}/web.sh"
+
+
+  cronsun:conf:base > "${output_dir}/base.json"
+  cronsun:conf:db > "${output_dir}/db.json"
+  cronsun:conf:etcd > "${output_dir}/etcd.json"
+  cronsun:conf:mail > "${output_dir}/mail.json"
+  cronsun:conf:security > "${output_dir}/security.json"
+  cronsun:conf:web > "${output_dir}/web.json"
+}
+
+
+cronsun:main "${@}"

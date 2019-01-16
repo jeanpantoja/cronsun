@@ -1,0 +1,7 @@
+Dockerfile
+doc/*
+docker-example/*
+vendor/*
+LICENSE
+README.*
+release.sh
